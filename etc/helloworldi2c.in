@@ -1,0 +1,180 @@
+#include <SPI.h>
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+#define SCREEN_WIDTH 128 // OLED display width, in pixels
+#define SCREEN_HEIGHT 64 // OLED display height, in pixels
+
+// Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
+// The pins for I2C are defined by the Wire-library.
+// On an arduino UNO:       A4(SDA), A5(SCL)
+// On an arduino MEGA 2560: 20(SDA), 21(SCL)
+// On an arduino LEONARDO:   2(SDA),  3(SCL), ...
+#define OLED_RESET -1 // Reset pin # (or -1 if sharing Arduino reset pin)
+
+#define SCREEN_ADDRESS 0x3C ///< See datasheet for Address; 0x3D for 128x64, 0x3C for 128x32
+int i;
+int x = 64, y = 16;
+
+#define ButtonOne 9
+#define ButtonTwo 10
+#define ButtonThree 11
+#define ButtonFour 12
+// #define LED 6
+
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
+
+void setup()
+{
+    Serial.begin(9600);
+
+    // pinMode(LED, OUTPUT);
+
+    // pinMode(button, INPUT_PULLUP);
+    // attachInterrupt(digitalPinToInterrupt(button), input, HIGH);
+
+    pinMode(ButtonOne, INPUT);
+    pinMode(ButtonTwo, INPUT);
+    pinMode(ButtonThree, INPUT);
+    pinMode(ButtonFour, INPUT);
+
+    // SSD1306_SWITCHCAPVCC = generate display voltage from 3.3V internally
+    if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C))
+    {
+        Serial.println(F("SSD1306 allocation failed"));
+        for (;;)
+            ; // Don't proceed, loop forever
+    }
+
+    // Show initial display buffer contents on the screen --
+    // the library initializes this with an Adafruit splash screen.
+    display.display();
+    delay(2000); // Pause for 2 seconds
+
+    // Clear the buffer
+    display.clearDisplay();
+
+    // randomDots();
+    // alphabet();
+    // movementTest();
+}
+
+void loop()
+{
+    Serial.println(digitalRead(ButtonOne));
+    int ButtonOneread = digitalRead(ButtonOne);
+    int ButtonTworead = digitalRead(ButtonTwo);
+    int ButtonThreeread = digitalRead(ButtonThree);
+    int ButtonFourread = digitalRead(ButtonFour);
+    // digitalWrite(LED, LOW);
+
+    if (digitalRead(ButtonOne) == HIGH)
+    {
+        display.clearDisplay();
+
+        display.setTextSize(1);
+        display.setTextColor(SSD1306_WHITE);
+        display.setCursor(0, 0);
+        display.println("1st");
+        display.display();
+    }
+    else
+    {
+        display.clearDisplay();
+        display.display();
+    }
+
+    switch (HIGH)
+    {
+    case ButtonOne:
+        display.clearDisplay();
+
+        display.setTextSize(1);
+        display.setTextColor(SSD1306_WHITE);
+        display.setCursor(0, 0);
+        display.println("1st");
+        display.display();
+        break;
+
+    case ButtonTwo:
+        display.clearDisplay();
+
+        display.setTextSize(1);
+        display.setTextColor(SSD1306_WHITE);
+        display.setCursor(0, 0);
+        display.println("2nd");
+        display.display();
+        break;
+
+    case ButtonThree:
+        display.clearDisplay();
+
+        display.setTextSize(1);
+        display.setTextColor(SSD1306_WHITE);
+        display.setCursor(0, 0);
+        display.println("3rd");
+        display.display();
+        break;
+
+    case ButtonFour:
+        display.clearDisplay();
+
+        display.setTextSize(1);
+        display.setTextColor(SSD1306_WHITE);
+        display.setCursor(0, 0);
+        display.println("4th");
+        display.display();
+        break;
+
+    default:
+        break;
+    }
+}
+
+void randomDots(void)
+{
+    display.clearDisplay();
+    for (int x = 0; x < SCREEN_WIDTH; x++)
+    {
+        for (int y = 0; y < SCREEN_HEIGHT; y++)
+        {
+            i = random(2);
+            Serial.println(i);
+
+            if (i == 1)
+            {
+                display.drawPixel(x, y, WHITE);
+            }
+            // else
+            // {
+            //     display.drawPixel(x, y, SSD1306_BLACK);
+            // }
+        }
+    }
+    display.display();
+}
+
+void alphabet(void)
+{
+    display.clearDisplay();
+
+    display.setTextSize(1);
+    display.setTextColor(SSD1306_WHITE);
+    display.setCursor(0, 0);
+    display.println("Aa Bb Cc Dd Ee Ff Gg Hh Ij Jk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Yy Xx Zz 1 2 3 4 5 6 7 8 9 @ # .");
+    display.display();
+}
+
+void input()
+{
+    // digitalWrite(LED, HIGH);
+    y--;
+    Serial.println("Up");
+}
+void draw()
+{
+    display.clearDisplay();
+    display.drawPixel(x, y, WHITE);
+    display.display();
+}

@@ -1,0 +1,52 @@
+/**
+ *@file aaaaa.ino
+ *@date 2022 - 02 - 11
+ */
+
+// Libraries
+
+// Initialize const variables
+const int sensor = 11;
+const int led = 8;
+const int buzzer = 7;
+
+// Initialize variables
+int state = LOW; // by default, no motion detected
+int val = 0;     // variable to store the sensor status (value)
+
+void setup()
+{
+    pinMode(led, OUTPUT); // initalize LED as an output
+    pinMode(buzzer, OUTPUT);
+    pinMode(sensor, INPUT); // initialize sensor as an input
+    Serial.begin(9600);     // initialize serial
+}
+
+void loop()
+{
+    val = digitalRead(sensor); // read sensor value
+    if (val == HIGH)
+    {                            // check if the sensor is HIGH
+        digitalWrite(led, HIGH); // turn LED ON
+        digitalWrite(buzzer, HIGH);
+        delay(50); // delay 50 milliseconds
+
+        if (state == LOW)
+        {
+            Serial.println("Motion detected!");
+            state = HIGH; // update variable state to HIGH
+        }
+    }
+    else
+    {
+        digitalWrite(led, LOW); // turn LED OFF
+        digitalWrite(buzzer, LOW);
+        delay(50); // delay 50 milliseconds
+
+        if (state == HIGH)
+        {
+            Serial.println("Motion stopped!");
+            state = LOW; // update variable state to LOW
+        }
+    }
+}

@@ -1,0 +1,80 @@
+void setup()
+{
+    pinMode(13, OUTPUT); // 1st LED
+    pinMode(12, OUTPUT); // 2nd LED
+    pinMode(8, OUTPUT);  // 3rd LED
+    pinMode(7, OUTPUT);  // 4th LED
+    pinMode(4, OUTPUT);  // 5th LED
+    pinMode(2, OUTPUT);  // 6th LED
+}
+
+void loop()
+{
+    digitalWrite(13, HIGH); // turns on 1st LED
+    delay(100);
+    digitalWrite(13, LOW); // turns off 1st LED
+
+    digitalWrite(12, HIGH); // turns on 2nd LED
+    delay(100);
+    digitalWrite(12, LOW); // turns off 2nd LED
+
+    digitalWrite(8, HIGH); // turns on 3rd LED
+    delay(100);
+    digitalWrite(8, LOW); // turns off 3rd LED
+
+    digitalWrite(7, HIGH); // turns on 4th LED
+    delay(100);
+    digitalWrite(7, LOW); // turns off 4th LED
+
+    digitalWrite(4, HIGH); // turns on 5th LED
+    delay(100);
+    digitalWrite(4, LOW); // turns off 5th LED
+
+    digitalWrite(2, HIGH); // turns on 6th LED
+    delay(100);
+    digitalWrite(2, LOW); // turns off 6 LED
+
+    digitalWrite(4, HIGH); // turns on 5th LED
+    delay(100);
+    digitalWrite(4, LOW); // turns off 5th LED
+
+    digitalWrite(7, HIGH); // turns on 4th LED
+    delay(100);
+    digitalWrite(7, LOW); // turns off 4th LED
+
+    digitalWrite(8, HIGH); // turn on 3rd LED
+    delay(100);
+    digitalWrite(8, LOW); // turns off 3rd LED
+
+    digitalWrite(12, HIGH); // turns on 2nd LED
+    delay(100);
+    digitalWrite(12, LOW); // turns off 2nd LED
+}
+
+void loop1()
+{
+    digitalWrite(7, HIGH); // turns on 4th LED
+    digitalWrite(8, HIGH); // turns on 3rd LED
+    delay(100);
+
+    digitalWrite(7, LOW);   // turns off 4th LED
+    digitalWrite(8, LOW);   // turns off 3rd LED
+    digitalWrite(12, HIGH); // turns on 2nd LED
+    digitalWrite(4, HIGH);  // turns on 5th LED
+    delay(100);
+
+    digitalWrite(12, LOW);  // turns off 2nd LED
+    digitalWrite(4, LOW);   // turns off 5th LED
+    digitalWrite(13, HIGH); // turns on 1st LED
+    digitalWrite(2, HIGH);  // turns on 6th LED
+    delay(100);
+
+    digitalWrite(13, LOW);  // turns off 1st LED
+    digitalWrite(2, LOW);   // turns off 6th LED
+    digitalWrite(12, HIGH); // turns on 2nd LED
+    digitalWrite(4, HIGH);  // turns on 5th LED
+    delay(100);
+
+    digitalWrite(12, LOW); // turns off 2nd LED
+    digitalWrite(4, LOW);  // turns off 5th LED
+}

@@ -1,0 +1,29 @@
+/**
+ *@file work.ino
+ *@author Pixelatedlily (33810489+Pixelatedlily@users.noreply.github.com)
+ *@date 2022 - 01 - 06
+ *@copyright Copyright (c)2022
+ */
+
+// Libraries
+#include <MUIU8g2.h>
+#include <U8g2lib.h>
+#include <U8x8lib.h>
+// Initialize const variables
+
+// Initialize variables
+
+U8GLIB_SSD1306_128X32 u8g(U8G_I2C_OPT_NONE); // I2C / TWI
+void setup(void)
+{
+}
+
+void loop(void)
+{
+    u8g.setFont(u8g_font_unifont);
+    u8g.setPrintPos(0, 15);
+    u8g.print("0.91 OELD");
+    u8g.setPrintPos(0, 30);
+    u8g.print("SmartPrototyping");
+    delay(500);
+}

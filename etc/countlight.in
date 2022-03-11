@@ -1,0 +1,50 @@
+// Libraries
+
+// Initialize const variables
+const int green = 13;  // green pin
+const int yellow = 12; // yellow pin
+const int red = 11;    // red pin
+// Initialize variables
+int counter = 0; // counter
+void setup()
+{
+    Serial.begin(9600);
+    pinMode(green, OUTPUT);  // initializes green led
+    pinMode(yellow, OUTPUT); // initializes yellow led
+    pinMode(red, OUTPUT);    // initializes red led
+}
+void loop()
+{
+    digitalWrite(green, LOW);  // turns off green
+    digitalWrite(yellow, LOW); // turns off yellow
+    digitalWrite(red, LOW);    // turns off red
+    if (counter < 100)         // checks if the counter is less than 100
+    {
+        digitalWrite(green, HIGH); // turns on green
+    }
+    else
+    {
+        digitalWrite(green, LOW); // turns off green
+    }
+
+    if (counter > 100 && counter < 200) // checks if the counter is less than 100
+    {
+        digitalWrite(yellow, HIGH); // turns on yellow
+    }
+    else
+    {
+        digitalWrite(yellow, LOW); // turns off yellow
+    }
+
+    if (counter > 200) // checks if the counter is moress than 200
+    {
+        digitalWrite(red, HIGH); // turns on red
+    }
+    else
+    {
+        digitalWrite(red, LOW); // turns off red
+    }
+    counter++; // increments counter
+    delay(100);
+    Serial.println(counter);
+}

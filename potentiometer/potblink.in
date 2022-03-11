@@ -1,0 +1,35 @@
+/**
+ *@file potblink.ino
+ *@date 2022 - 02 - 09
+ */
+
+// Libraries
+
+// Initialize const variables
+const int LED = 9;
+const int potentiometer = A1;
+// Initialize variables
+int delaytime;
+int input;
+int min = 500;
+int max = 2000;
+void setup()
+{
+    Serial.begin(9600);
+    pinMode(potentiometer, INPUT);
+    pinMode(LED, OUTPUT);
+}
+
+void loop()
+{
+    input = analogRead(potentiometer);
+    delaytime = map(input, 0, 1023, min, max);
+
+    digitalWrite(LED, HIGH);
+    delay(delaytime);
+    input = analogRead(potentiometer);
+    delaytime = map(input, 0, 1023, min, max);
+    digitalWrite(LED, LOW);
+    delay(delaytime);
+    // millis would make it a bit faster but eh
+}

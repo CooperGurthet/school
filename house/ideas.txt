@@ -1,0 +1,16 @@
+1. Blinds
+2. night light
+3. voice commands
+4. keypad lock
+    Timer since unlocked
+5. smart plug
+    Transistors
+6. Door
+7. App/Website to connect them
+    BLE connection
+8. plant watering system
+
+Threading:
+    Timing threadcontroller
+    Sensor threadcontroller
+    Serial threadcontroller

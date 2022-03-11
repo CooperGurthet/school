@@ -1,0 +1,29 @@
+https://github.com/ChrisMicro/mcurses
+
+☐ Make version for arduino
+
+☐ have health info in new windows
+inventory:
+    ☐ on side window maybe?
+    https://www.viget.com/articles/c-games-in-ncurses-using-multiple-windows/
+    ☐ gear
+    ☐ items
+☐ main menu
+☐ Custom seed
+
+☐ enemies
+http://rogueliketutorials.com/tutorials/tcod/v2/part-6/
+☐ bosses
+    Golem- Wake it up and have it attack
+    Dragon?
+
+☐ stairs
+☐ Doors
+    if the x value is the least or the greatest on given x axis chance to be door
+☐ lock and key
+
+☐ shop
+☐ minimap?
+spells:
+    ☐ vision
+☐ Have it run without colors if colors not supported

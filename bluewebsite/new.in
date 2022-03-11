@@ -1,0 +1,30 @@
+#include <SoftwareSerial.h>
+SoftwareSerial mySerial(0, 1);
+int ledpin = 2;
+void setup()
+{
+    mySerial.begin(9600);
+    Serial.begin(9600);
+    pinMode(ledpin, OUTPUT);
+    digitalWrite(ledpin, HIGH);
+}
+void loop()
+{
+    int i;
+
+    if (mySerial.available())
+    {
+        i = mySerial.read();
+        Serial.println("DATA RECEIVED:");
+        if (i == '1')
+        {
+            digitalWrite(ledpin, HIGH);
+            Serial.println("led on");
+        }
+        if (i == '0')
+        {
+            digitalWrite(ledpin, LOW);
+            Serial.println("led off");
+        }
+    }
+}

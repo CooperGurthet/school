@@ -1,0 +1,68 @@
+/**
+ *@file face.ino
+ *@date 2022 - 02 - 22
+ */
+
+// Libraries
+#include <Servo.h>
+// Initialize const variables
+const int verticalpin = 5;
+const int horizontalpin = 6;
+// Initialize variables
+Servo servoVer; // Vertical Servo
+Servo servoHor; // Horizontal Servo
+
+int x;
+int y;
+int prevX;
+int prevY;
+
+void setup()
+{
+    Serial.begin(9600);
+    servoVer.attach(verticalpin);   // Attach Vertical Servo to Pin 5
+    servoHor.attach(horizontalpin); // Attach Horizontal Servo to Pin 6
+    servoVer.write(90);             // set motor to midpoint
+    servoHor.write(90);             // set motor to midpoint
+}
+void Pos()
+{
+    if (prevX != x || prevY != y)
+    {
+        int servoX = map(x, 600, 0, 70, 179); // the cv x value is between 600 an 0 mapped to rotation of camera?
+        int servoY = map(y, 450, 0, 179, 95); // the cv y value is between 450 an 0 mapped to rotation of camera?
+
+        // checks if servoX is between 70 and 179
+        servoX = min(servoX, 179);
+        servoX = max(servoX, 70);
+
+        // checks if servoY is between 179 and 95
+        servoY = min(servoY, 179);
+        servoY = max(servoY, 95);
+
+        // moves servos
+        servoHor.write(servoX);
+        servoVer.write(servoY);
+    }
+}
+void loop()
+{
+    if (Serial.available() > 0)
+    {
+        if (Serial.read() == 'X')
+        {
+            x = Serial.parseInt(); // gets only the int from the x value
+            if (Serial.read() == 'Y')
+            {
+                y = Serial.parseInt(); // gets only the int from the y value
+                Pos();
+                prevX = x;
+                prevY = y;
+            }
+        }
+        while (Serial.available() > 0)
+        {
+            Serial.read();
+        }
+    }
+}

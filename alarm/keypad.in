@@ -1,0 +1,135 @@
+/*
+ * TODO
+ * Set passcode from remote
+ * use button instead of button codes
+ * shrink switch statement
+ */
+
+#include <IRremote.h>
+//true size of the passcode
+#define listsize sizeof(code) - 1
+
+//pins
+const int IR_RECEIVE_PIN = 7;
+const int LED = 6;
+
+//passcode change based off of button output
+int code[] = {12, 24, 94};
+
+//variables
+int inputs[listsize];
+int i = 0;
+
+void setup()
+{
+    //  begin processes
+    Serial.begin(9600);
+    IrReceiver.begin(IR_RECEIVE_PIN);
+    // set pinmodes
+    pinMode(LED, OUTPUT);
+}
+
+void loop()
+{
+    if (IrReceiver.decode()) // check if the reveiver is working and if there is data in buffer
+    {
+        if (IrReceiver.decodedIRData.flags != 1)
+        {                                                        //checks if the pin is repeated (stops multiple inputs from one button press)
+            uint32_t command = IrReceiver.decodedIRData.command; // Gets the data from
+            switch (command)
+            {                        //Checks what button was pressed
+            case 22:                 //0
+                inputs[i] = command; //sets the list at index i to current button press
+                i++;                 //increments the index counter
+                break;               //exits switch case
+            case 12:                 //1
+                inputs[i] = command; //sets the list at index i to current button press
+                i++;                 //increments the index counter
+                break;               //exits switch case
+            case 24:                 //2
+                inputs[i] = command; //sets the list at index i to current button press
+                i++;                 //increments the index counter
+                break;               //exits switch case
+            case 94:                 //3
+                inputs[i] = command; //sets the list at index i to current button press
+                i++;                 //increments the index counter
+                break;               //exits switch case
+            case 8:                  //4
+                inputs[i] = command; //sets the list at index i to current button press
+                i++;                 //increments the index counter
+                break;               //exits switch case
+            case 28:                 //5
+                inputs[i] = command; //sets the list at index i to current button press
+                i++;                 //increments the index counter
+                break;               //exits switch case
+            case 90:                 //6
+                inputs[i] = command; //sets the list at index i to current button press
+                i++;                 //increments the index counter
+                break;               //exits switch case
+            case 66:                 //7
+                inputs[i] = command; //sets the list at index i to current button press
+                i++;                 //increments the index counter
+                break;               //exits switch case
+            case 82:                 //8
+                inputs[i] = command; //sets the list at index i to current button press
+                i++;                 //increments the index counter
+                break;               //exits switch case
+            case 74:                 //9
+                inputs[i] = command; //sets the list at index i to current button press
+                i++;                 //increments the index counter
+                break;               //exits switch case
+            case 25:                 //eq (chosen enter button)
+                if (listequal(inputs, code))
+                { //Checks if inputed code is equal to passcode
+                    Serial.println("correct code");
+                }
+                else
+                {
+                    Serial.println("wrong code");
+                }
+                memset(inputs, 0, sizeof(inputs)); //resets the inputed code
+                i = 0;                             //resets incrementer
+                break;                             //exits switch case
+            default:                               //if no other cases activate
+                break;                             //exits switch case
+            }
+        }
+        IrReceiver.resume(); //gets next button from the IR
+    }
+}
+
+/*
+ *Raw data and command data in base 10
+ *pow - 3125149440, 69 
+ *vol+ - 3108437760, 70
+ *func/stop - 3091726080, 71
+ *|<< - 141861120, 68
+ *>|| - 3208707840, 64
+ *>>| - 3158572800, 67
+ *dwn - 4161273600, 7
+ *vol- - 3927310080, 21
+ *0 - 3910598400, 22
+ *eq - 3860463360, 25
+ *st/rept - 4061003520, 13
+ *1 - 4077715200, 12
+ *2 - 3877175040, 24
+ *3 - 2707357440, 94
+ *4 - 4144561920, 8
+ *5 - 3810328320, 28
+ *6 - 2774204160, 90
+ *7 - 3175284480, 66
+ *8 - 2907897600, 82
+ *9 - 3041591040, 74
+*/
+
+bool listequal(int list1[listsize], int list2[listsize])
+{ //Function to check if lists are equal
+    for (int i = 0; i < listsize; i++)
+    {                             //increments until end of list
+                                  //    Serial.println(list1[i]);
+                                  //    Serial.println(list2[i]);
+        if (list1[i] != list2[i]) //Checks if this index is equal
+            return false;         //if any of them aren't equal its not equal
+    }
+    return true; //if the for loop completes then they are equal
+}

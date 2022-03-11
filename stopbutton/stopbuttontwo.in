@@ -1,0 +1,91 @@
+// Initialize const variables
+const int buttonPin = 2;
+const int green = 10;
+const int yellow = 9;
+const int red = 8;
+
+// Initialize variables
+// unsigned long not int since int last for 32 seconds
+unsigned long last_time;  // time since last led update
+unsigned long time;       // total time
+int light = 3000;         // time lights stay on for
+int adv_time = 500;       // time between green blink
+unsigned long blink_time; // time between each blink
+int i = 0;                // counter
+int value = 0;            // switches high and low
+int j = 0;                // loop flag
+
+void setup()
+{
+    Serial.begin(9600);                                                      // starts serial port
+    pinMode(green, OUTPUT);                                                  // green LED
+    pinMode(yellow, OUTPUT);                                                 // yellow LED
+    pinMode(red, OUTPUT);                                                    // red LED
+    pinMode(buttonPin, INPUT_PULLUP);                                        // button
+    attachInterrupt(digitalPinToInterrupt(buttonPin), Button_pressed, HIGH); // runs the button_pressed function when button is pressed
+
+    // starts the loop at red
+    digitalWrite(red, HIGH); // turn red LED on
+    last_time = 0;           // intialize time since last update to 0
+}
+
+void loop()
+{
+    // millis() gets time since program starts in milliseconds
+    time = millis();                   // get current time
+    if (millis() - last_time >= light) // checks if it has been 3 seconds since last update
+    {
+
+        if (digitalRead(red) == HIGH) // checks if current high led is red
+        {
+            last_time = millis();   // sets the time since last led update to current time
+            digitalWrite(red, LOW); // turn red LED off
+            i = 0;                  // resets counter to 0
+            Serial.println("Advanced Green");
+            while (i < 5) // runs 5 times
+            {
+                j = 1;
+                value = !value;                             // changes value to opposite current value
+                digitalWrite(green, value);                 // turn green LED on
+                blink_time = millis();                      // sets the time since last blink
+                while (millis() <= (blink_time + adv_time)) // waits until blink time has passed
+                {
+                }
+                digitalWrite(green, CHANGE); // turn green LED on
+                i = i + 1;                   // increment 1 each time
+                j = 0;                       // notifies that loop isn't running
+            }
+            Serial.println("Green");
+            last_time = millis(); // sets the time since last led update to current time
+        }
+        else if (digitalRead(green) == HIGH) // checks if current high led is green
+        {
+            last_time = millis() - (2 / 3 * light); // sets the time since last led update to current time 2/3 since we only want 1 second yellow
+            digitalWrite(green, LOW);               // turn green LED off
+            digitalWrite(yellow, HIGH);             // turn yellow LED on
+            Serial.println("Yellow");
+        }
+        else if (digitalRead(yellow) == HIGH) // checks if current high led is yellow
+        {
+            last_time = millis();      // sets the time since last led update to current time
+            digitalWrite(yellow, LOW); // turn yellow LED off
+            digitalWrite(red, HIGH);   // turn red LED on
+            Serial.print("Red");
+        }
+    }
+}
+
+void Button_pressed() // ran if button is pressed
+{
+    if (digitalRead(green) == HIGH) // checks if the green LED is on if not do nothing since it is already in a position we want
+    {
+        i = 9999;      // stops loop if button is pressed during blink
+        while (j == 1) // checks if in the middle of blink loop
+        {
+        }
+        digitalWrite(green, LOW);   // turn green LED off
+        digitalWrite(yellow, HIGH); // turn yellow LED on
+        Serial.print("Yellow");
+        last_time = millis() - (2 / 3 * light); // sets the time since last led update to current time 2/3 since we only want 1 second yellow
+    }
+}

@@ -1,0 +1,29 @@
+/**
+ *@file decrease.ino
+ *@date 2021 - 12 - 17
+ *@copyright Copyright (c)2021
+ */
+
+// Libraries
+
+// Initialize const variables
+const int led = 8;
+// Initialize variables
+int delaytime = 2000;
+
+void setup()
+{
+    pinMode(led, OUTPUT);
+}
+
+void loop()
+{
+    while (delaytime > 0)
+    {
+        digitalWrite(led, HIGH);
+        delay(delaytime);
+        digitalWrite(led, LOW);
+        delay(delaytime);
+        delaytime -= 1;
+    }
+}
